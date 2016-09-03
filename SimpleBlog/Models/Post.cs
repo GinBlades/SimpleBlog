@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace SimpleBlog.Models {
     public class Post {
-        [Required]
+        [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PostId { get; set; }
-        [Required]
+        [Required, MaxLength(256)]
         public string Title { get; set; }
         [Required]
         public string Body { get; set; }
@@ -17,8 +18,10 @@ namespace SimpleBlog.Models {
         [Required]
         public PostStatus PostStatus { get; set; }
         [Required]
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
+        [NotMapped]
         public ApplicationUser ApplicationUser { get; set; }
+        public ICollection<Tag> Tags { get; set; }
     }
 
     public enum PostStatus {
