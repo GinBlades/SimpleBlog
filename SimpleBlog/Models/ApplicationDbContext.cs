@@ -22,5 +22,6 @@ namespace SimpleBlog.Models {
         
         public virtual DbSet<Post> Post { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
+        public virtual DbSet<Comment> Comment { get; set; }
     }
 }
