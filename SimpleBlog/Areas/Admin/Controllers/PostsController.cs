@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SimpleBlog.Models;
+using Microsoft.AspNet.Identity;
 
 namespace SimpleBlog.Areas.Admin.Controllers {
 
@@ -42,13 +43,20 @@ namespace SimpleBlog.Areas.Admin.Controllers {
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "PostId,Title,Body,Publish,PostStatus,ApplicationUserId")] Post post) {
+        public async Task<ActionResult> Create([Bind(Include = "PostId,Title,Body,Publish,PostStatus,TagList")] Post post) {
+            post.ApplicationUserId = User.Identity.GetUserId();
+            ModelState.Clear();
+            TryValidateModel(post);
             if (ModelState.IsValid) {
+                post.Tags = new List<Tag>();
+                foreach (var tagName in post.TagList.Split(',')) {
+                    Tag tag = await db.Tag.FirstOrDefaultAsync(t => t.Name == tagName) ?? new Tag { Name = tagName };
+                    post.Tags.Add(tag);
+                }
                 db.Post.Add(post);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
             return View(post);
         }
 

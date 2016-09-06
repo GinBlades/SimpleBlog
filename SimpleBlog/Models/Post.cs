@@ -23,6 +23,8 @@ namespace SimpleBlog.Models {
         [NotMapped]
         public ApplicationUser ApplicationUser { get; set; }
         public ICollection<Tag> Tags { get; set; }
+        [NotMapped]
+        public string TagList { get; set; }
     }
 
     public enum PostStatus {

@@ -48,6 +48,15 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.TagList, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.TagList, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TagList, "", new { @class = "text-danger" })
+                <span class="help-block">As a comma separated list</span>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
