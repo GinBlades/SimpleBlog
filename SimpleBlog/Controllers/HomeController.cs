@@ -1,13 +1,18 @@
-﻿using System;
+﻿using SimpleBlog.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace SimpleBlog.Controllers {
     public class HomeController : Controller {
-        public ActionResult Index() {
-            return View();
+        private ApplicationDbContext db = new ApplicationDbContext();
+        public async Task<ActionResult> Index() {
+            List<Post> posts = await db.Post.ToListAsync();
+            return View(posts);
         }
 
         public ActionResult About() {

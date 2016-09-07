@@ -18,7 +18,7 @@ namespace SimpleBlog.Areas.Admin.Controllers {
 
         // GET: Posts
         public async Task<ActionResult> Index() {
-            return View(await db.Post.ToListAsync());
+            return View(await db.Post.OrderByDescending(p => p.Publish).Take(3).ToListAsync());
         }
 
         // GET: Posts/Details/5
