@@ -22,7 +22,8 @@ namespace SimpleBlog.Models {
         public string ApplicationUserId { get; set; }
         [NotMapped]
         public ApplicationUser ApplicationUser { get; set; }
-        public ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
         [NotMapped]
         public string TagList { get; set; }
     }

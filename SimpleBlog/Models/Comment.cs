@@ -10,6 +10,8 @@ namespace SimpleBlog.Models {
     public class Comment {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CommentId { get; set; }
+        [MaxLength(256)]
+        public string Name { get; set; }
         [Required, DataType(DataType.EmailAddress), MaxLength(256)]
         public string Email { get; set; }
         [Required, DataType(DataType.MultilineText), MaxLength(2048)]

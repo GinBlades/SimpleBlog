@@ -1,57 +1,23 @@
 ﻿@model IEnumerable<SimpleBlog.Models.Post>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Posts";
 }
 
-<h2>Index</h2>
+<h1>Posts</h1>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Body)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Publish)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostStatus)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Body)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Publish)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUserId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PostId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PostId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PostId })
-        </td>
-    </tr>
+@foreach (var post in Model) {
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a href="@Url.Action("Details", new { Id = post.PostId })">@post.Title</a>
+            </h3>
+        </div>
+        <div class="panel-body">
+            @post.Body
+            <span class="pull-right">
+                <i>By @post.ApplicationUserId at @post.Publish</i>
+            </span>
+        </div>
+    </div>
 }
-
-</table>

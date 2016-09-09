@@ -1,4 +1,5 @@
 ﻿using SimpleBlog.Models;
+using SimpleBlog.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,7 +14,9 @@ namespace SimpleBlog.Controllers {
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Posts
         public async Task<ActionResult> Index() {
-            return View(await db.Post.OrderByDescending(p => p.Publish).Take(3).ToListAsync());
+            return View(await db.Post.Where(p => p.PostStatus == PostStatus.Publish)
+                .Include(p => p.Comments)
+                .OrderByDescending(p => p.Publish).Take(3).ToListAsync());
         }
         public async Task<ActionResult> Details(int? id) {
             if (id == null) {
@@ -23,7 +26,7 @@ namespace SimpleBlog.Controllers {
             if (post == null) {
                 return HttpNotFound();
             }
-            return View(post);
+            return View(new PostDetailsViewModel(post));
         }
     }
 }
